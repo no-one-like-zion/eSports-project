@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Sixty-Four | My Love for Chess</title>
+  <meta name="description" content="A personal tribute to the chess players and openings that shaped how I play.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="media/css/style.css" rel="stylesheet">
+</head>
+<body data-bs-spy="scroll" data-bs-target="#mainNav" data-bs-offset="120" tabindex="0">
+
+  <div class="progress-line" id="progressLine"></div>
+
+  <nav class="navbar navbar-expand-md fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="#home">The Sixty-Four</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navMenu">
+        <ul class="navbar-nav gap-md-3">
+          <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#players">Players</a></li>
+          <li class="nav-item"><a class="nav-link" href="#openings">Openings</a></li>
+          <li class="nav-item"><a class="nav-link" href="#closing">Closing</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero" id="home">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-7">
+          <p class="hero-kicker">A personal tribute</p>
+          <h1 class="hero-title">Sixty-four squares.<br>Endless reasons to play.</h1>
+          <p class="hero-lead">Chess taught me patience, nerve and how to lose well. This is a record of the players who shaped my game and the openings I trust when the clock starts.</p>
+          <div class="d-flex flex-wrap gap-3 mt-4">
+            <a href="#players" class="btn btn-gold">Meet the players</a>
+            <a href="#openings" class="btn btn-outline-light-soft">Explore the openings</a>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="hero-board" id="heroBoard" aria-hidden="true"></div>
+          <p class="board-hint">Move your cursor across the board. Click a square to mark it.</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- PLAYERS -->
+  <section class="section section-light" id="players">
+    <div class="container">
+      <div class="section-head">
+        <h2>The players I study</h2>
+        <p>Five players, five different ways of seeing the board. Select a name to read why they matter to me.</p>
+      </div>
+
+      <div class="roster" role="tablist" aria-label="Favorite players">
+        <button class="roster-btn active" id="tab-carlsen" data-bs-toggle="pill" data-bs-target="#pane-carlsen" type="button" role="tab" aria-controls="pane-carlsen" aria-selected="true">
+          <span class="frame frame-thumb" data-label="Carlsen"><img src="media/images/Carlsen.jpg" alt=""></span>
+          <span class="roster-name">Carlsen</span>
+        </button>
+        <button class="roster-btn" id="tab-nakamura" data-bs-toggle="pill" data-bs-target="#pane-nakamura" type="button" role="tab" aria-controls="pane-nakamura" aria-selected="false">
+          <span class="frame frame-thumb" data-label="Nakamura"><img src="media/images/Nakamura.jpg" alt=""></span>
+          <span class="roster-name">Nakamura</span>
+        </button>
+        <button class="roster-btn" id="tab-firouzja" data-bs-toggle="pill" data-bs-target="#pane-firouzja" type="button" role="tab" aria-controls="pane-firouzja" aria-selected="false">
+          <span class="frame frame-thumb" data-label="Firouzja"><img src="media/images/Firouzja.jpg" alt=""></span>
+          <span class="roster-name">Firouzja</span>
+        </button>
+        <button class="roster-btn" id="tab-caruana" data-bs-toggle="pill" data-bs-target="#pane-caruana" type="button" role="tab" aria-controls="pane-caruana" aria-selected="false">
+          <span class="frame frame-thumb" data-label="Caruana"><img src="media/images/Caruana.jpg" alt=""></span>
+          <span class="roster-name">Caruana</span>
+        </button>
+        <button class="roster-btn" id="tab-niemann" data-bs-toggle="pill" data-bs-target="#pane-niemann" type="button" role="tab" aria-controls="pane-niemann" aria-selected="false">
+          <span class="frame frame-thumb" data-label="Niemann"><img src="media/images/Niemann.jpg" alt=""></span>
+          <span class="roster-name">Niemann</span>
+        </button>
+      </div>
+
+      <div class="tab-content player-stage">
+
+        <!-- CARLSEN -->
+        <div class="tab-pane fade show active" id="pane-carlsen" role="tabpanel" aria-labelledby="tab-carlsen" tabindex="0">
+          <div class="row g-5 align-items-center">
+            <div class="col-md-5">
+              <div class="frame frame-portrait" data-label="Carlsen.jpg"><img src="media/images/Carlsen.jpg" alt="Portrait of Magnus Carlsen"></div>
+            </div>
+            <div class="col-md-7">
+              <h3 class="player-name">Magnus Carlsen</h3>
+              <p class="player-tag">Norway &middot; Grandmaster</p>
+              <h4 class="mini-head">Why I love his play</h4>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+              <h4 class="mini-head">What I learned</h4>
+              <ul class="lessons">
+                <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+                <li>Duis aute irure dolor in reprehenderit in voluptate velit.</li>
+                <li>Excepteur sint occaecat cupidatat non proident sunt.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- NAKAMURA -->
+        <div class="tab-pane fade" id="pane-nakamura" role="tabpanel" aria-labelledby="tab-nakamura" tabindex="0">
+          <div class="row g-5 align-items-center">
+            <div class="col-md-5">
+              <div class="frame frame-portrait" data-label="Nakamura.jpg"><img src="media/images/Nakamura.jpg" alt="Portrait of Hikaru Nakamura"></div>
+            </div>
+            <div class="col-md-7">
+              <h3 class="player-name">Hikaru Nakamura</h3>
+              <p class="player-tag">United States &middot; Grandmaster</p>
+              <h4 class="mini-head">Why I love his play</h4>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+              <h4 class="mini-head">What I learned</h4>
+              <ul class="lessons">
+                <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+                <li>Duis aute irure dolor in reprehenderit in voluptate velit.</li>
+                <li>Excepteur sint occaecat cupidatat non proident sunt.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- FIROUZJA -->
+        <div class="tab-pane fade" id="pane-firouzja" role="tabpanel" aria-labelledby="tab-firouzja" tabindex="0">
+          <div class="row g-5 align-items-center">
+            <div class="col-md-5">
+              <div class="frame frame-portrait" data-label="Firouzja.jpg"><img src="media/images/Firouzja.jpg" alt="Portrait of Alireza Firouzja"></div>
+            </div>
+            <div class="col-md-7">
+              <h3 class="player-name">Alireza Firouzja</h3>
+              <p class="player-tag">France &middot; Grandmaster</p>
+              <h4 class="mini-head">Why I love his play</h4>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+              <h4 class="mini-head">What I learned</h4>
+              <ul class="lessons">
+                <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+                <li>Duis aute irure dolor in reprehenderit in voluptate velit.</li>
+                <li>Excepteur sint occaecat cupidatat non proident sunt.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARUANA -->
+        <div class="tab-pane fade" id="pane-caruana" role="tabpanel" aria-labelledby="tab-caruana" tabindex="0">
+          <div class="row g-5 align-items-center">
+            <div class="col-md-5">
+              <div class="frame frame-portrait" data-label="Caruana.jpg"><img src="media/images/Caruana.jpg" alt="Portrait of Fabiano Caruana"></div>
+            </div>
+            <div class="col-md-7">
+              <h3 class="player-name">Fabiano Caruana</h3>
+              <p class="player-tag">United States &middot; Grandmaster</p>
+              <h4 class="mini-head">Why I love his play</h4>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+              <h4 class="mini-head">What I learned</h4>
+              <ul class="lessons">
+                <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+                <li>Duis aute irure dolor in reprehenderit in voluptate velit.</li>
+                <li>Excepteur sint occaecat cupidatat non proident sunt.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- NIEMANN -->
+        <div class="tab-pane fade" id="pane-niemann" role="tabpanel" aria-labelledby="tab-niemann" tabindex="0">
+          <div class="row g-5 align-items-center">
+            <div class="col-md-5">
+              <div class="frame frame-portrait" data-label="Niemann.jpg"><img src="media/images/Niemann.jpg" alt="Portrait of Hans Niemann"></div>
+            </div>
+            <div class="col-md-7">
+              <h3 class="player-name">Hans Niemann</h3>
+              <p class="player-tag">United States &middot; Grandmaster</p>
+              <h4 class="mini-head">Why I love his play</h4>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+              <h4 class="mini-head">What I learned</h4>
+              <ul class="lessons">
+                <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+                <li>Duis aute irure dolor in reprehenderit in voluptate velit.</li>
+                <li>Excepteur sint occaecat cupidatat non proident sunt.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- QUOTE BAND -->
+  <section class="quote-band" id="quote">
+    <div class="container">
+      <blockquote>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</blockquote>
+      <p class="quote-by">A line I keep in mind before every game</p>
+    </div>
+  </section>
+
+  <!-- OPENINGS -->
+  <section class="section section-dark" id="openings">
+    <div class="container">
+      <div class="section-head">
+        <h2>The openings I trust</h2>
+        <p>Three systems I return to again and again. Press the button on each to replay the first moves, or click a board to enlarge it.</p>
+      </div>
+
+      <!-- Ruy Lopez -->
+      <article class="opening row g-5 align-items-center">
+        <div class="col-md-6">
+          <button class="frame frame-board" type="button" data-bs-toggle="modal" data-bs-target="#imgModal" data-src="media/images/Lopez.jpg" data-title="Ruy Lopez" data-label="Lopez.jpg" aria-label="Enlarge the Ruy Lopez board">
+            <img src="media/images/Lopez.jpg" alt="Board position of the Ruy Lopez">
+          </button>
+        </div>
+        <div class="col-md-6">
+          <h3 class="opening-name">Ruy Lopez</h3>
+          <div class="moves" data-moves>
+            <span>1. e4</span><span>e5</span><span>2. Nf3</span><span>Nc6</span><span>3. Bb5</span>
+          </div>
+          <button class="btn btn-replay" type="button" data-replay>Replay the moves</button>
+          <h4 class="mini-head">Why I play it</h4>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+        </div>
+      </article>
+
+      <!-- Queen's Gambit -->
+      <article class="opening row g-5 align-items-center flex-md-row-reverse">
+        <div class="col-md-6">
+          <button class="frame frame-board" type="button" data-bs-toggle="modal" data-bs-target="#imgModal" data-src="media/images/QGambit.jpg" data-title="Queen's Gambit" data-label="QGambit.jpg" aria-label="Enlarge the Queen's Gambit board">
+            <img src="media/images/QGambit.jpg" alt="Board position of the Queen's Gambit">
+          </button>
+        </div>
+        <div class="col-md-6">
+          <h3 class="opening-name">Queen's Gambit</h3>
+          <div class="moves" data-moves>
+            <span>1. d4</span><span>d5</span><span>2. c4</span>
+          </div>
+          <button class="btn btn-replay" type="button" data-replay>Replay the moves</button>
+          <h4 class="mini-head">Why I play it</h4>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+        </div>
+      </article>
+
+      <!-- Caro-Kann -->
+      <article class="opening row g-5 align-items-center">
+        <div class="col-md-6">
+          <button class="frame frame-board" type="button" data-bs-toggle="modal" data-bs-target="#imgModal" data-src="media/images/CKann.jpg" data-title="Caro-Kann Defense" data-label="CKann.jpg" aria-label="Enlarge the Caro-Kann board">
+            <img src="media/images/CKann.jpg" alt="Board position of the Caro-Kann Defense">
+          </button>
+        </div>
+        <div class="col-md-6">
+          <h3 class="opening-name">Caro-Kann Defense</h3>
+          <div class="moves" data-moves>
+            <span>1. e4</span><span>c6</span><span>2. d4</span><span>d5</span>
+          </div>
+          <button class="btn btn-replay" type="button" data-replay>Replay the moves</button>
+          <h4 class="mini-head">Why I play it</h4>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+  <section class="section section-closing" id="closing">
+    <div class="container text-center">
+      <h2>Every game starts the same way</h2>
+      <p class="closing-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <a href="#home" class="btn btn-gold mt-3" data-top>Back to the start</a>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container d-flex flex-wrap justify-content-between gap-2">
+      <span>The Sixty-Four</span>
+      <span id="year"></span>
+    </div>
+  </footer>
+
+  <!-- IMAGE MODAL -->
+  <div class="modal fade" id="imgModal" tabindex="-1" aria-labelledby="imgModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="imgModalTitle"></h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-0">
+          <div class="frame frame-modal" id="imgModalFrame"><img src="" alt="" id="imgModalImg"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOATING BACK-TO-TOP (uses media/images/chess.png) -->
+  <button class="to-top" id="toTop" type="button" aria-label="Scroll back to the top">
+    <img src="media/images/chess.png" alt="" id="toTopImg">
+    <span class="to-top-fallback">Top</span>
+  </button>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="media/js/main.js"></script>
+</body>
+</html>
