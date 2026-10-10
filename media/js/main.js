@@ -14,27 +14,6 @@
     if (img.complete && img.naturalWidth === 0 && img.getAttribute("src")) markMissing(img);
   });
 
-  /* ---- 2. Hero board: squares glow and fade as the cursor passes ---- */
-  var board = document.getElementById("heroBoard");
-  if (board) {
-    for (var i = 0; i < 64; i++) {
-      var sq = document.createElement("div");
-      var row = Math.floor(i / 8), col = i % 8;
-      sq.className = "sq" + ((row + col) % 2 ? " dark" : "");
-      sq.addEventListener("click", function () { this.classList.toggle("marked"); });
-      board.appendChild(sq);
-    }
-    // Touch support: light the square under the finger
-    board.addEventListener("touchmove", function (e) {
-      var t = e.touches[0];
-      var el = document.elementFromPoint(t.clientX, t.clientY);
-      if (el && el.classList.contains("sq")) {
-        el.classList.add("lit");
-        setTimeout(function () { el.classList.remove("lit"); }, 120);
-      }
-    }, { passive: true });
-  }
-
   /* ---- 3. Navbar state, scroll progress, back-to-top button ---- */
   var nav = document.getElementById("mainNav");
   var progress = document.getElementById("progressLine");
