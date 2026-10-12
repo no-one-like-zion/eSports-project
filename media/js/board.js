@@ -4,6 +4,13 @@
 (function () {
   "use strict";
 
+  /* ---- CONFIG ------------------------------------------------------
+     Pieces show as letters (K Q R B N P) until you have piece images.
+     To use images: set PIECE_IMAGES to true and add 12 files to
+     media/images/pieces/ named:
+       wK.png wQ.png wR.png wB.png wN.png wP.png
+       bK.png bQ.png bR.png bB.png bN.png bP.png
+     If one fails to load, its letter placeholder is shown instead. */
   var PIECE_IMAGES = false;
   var PIECE_PATH = "media/images/pieces/";
 
@@ -17,6 +24,8 @@
   var undoBtn = document.getElementById("undoBtn");
   var newBtn = document.getElementById("newGameBtn");
   var flipBtn = document.getElementById("flipBtn");
+  var modeSelect = document.getElementById("modeSelect");
+  var sideSelect = document.getElementById("sideSelect");
 
   if (typeof Chess === "undefined") {
     statusEl.textContent = "The board could not load its rules.";
@@ -36,6 +45,26 @@
   var focusSq = "e2";
   var noteTimer = null;
   var promoOpen = false;
+
+  /* ---- COMPUTER OPPONENT (Stockfish, runs in the visitor's browser) ----
+     Files live in media/js/stockfish/. Needs the site to be served over
+     http(s) (GitHub Pages, Netlify, or a local server), not opened as a file. */
+  var ENGINE_PATH = "media/js/stockfish/stockfish-19-lite-single.js";
+  var LEVELS = {
+    easy:   { elo: 1320, ms: 200 },
+    medium: { elo: 1800, ms: 500 },
+    hard:   { elo: 2400, ms: 900 },
+    master: { elo: null, ms: 1500 }   // null = full strength
+  };
+  var MIN_THINK_MS = 600;             // so the reply never feels instant
+
+  var mode = "two";                   // "two" or a key of LEVELS
+  var human = "w";                    // side the visitor plays vs the computer
+  var engine = null;
+  var engineReady = false;
+  var readyQueue = [];
+  var thinking = false;
+  var ignoreBest = 0;                 // stale "bestmove" replies to skip
 
   /* ---------- piece placeholder ---------- */
   function pieceNode(color, type) {
@@ -151,8 +180,10 @@
     var other = side === "White" ? "Black" : "White";
     var text;
 
+    var vsCpu = mode !== "two";
     if (game.in_checkmate()) {
       text = other + " wins by checkmate.";
+      if (vsCpu) text = (game.turn() === human ? "Checkmate. The computer wins." : "Checkmate. You win.");
     } else if (game.in_stalemate()) {
       text = "Draw by stalemate.";
     } else if (game.in_draw()) {
@@ -162,6 +193,7 @@
     } else {
       text = side + " to move." + (game.in_check() ? " Check." : "");
     }
+    if (thinking) text = "The computer is thinking...";
     statusEl.textContent = text;
 
     // Move list
@@ -195,6 +227,8 @@
     else if (made.flags.indexOf("q") > -1) setNote("Castled queenside.", true);
     else if (made.flags.indexOf("p") > -1) setNote("Pawn promoted to " + NAMES[made.promotion] + ".", true);
     else setNote("");
+
+    maybeComputerMove();
   }
 
   function showPromotion(from, to) {
@@ -268,6 +302,10 @@
 
   function onSquare(sq) {
     if (promoOpen || game.game_over()) return;
+    if (mode !== "two" && (thinking || game.turn() !== human)) {
+      setNote("Please wait, the computer is thinking.", true);
+      return;
+    }
     focusSq = sq;
     var piece = game.get(sq);
     var turn = game.turn();
@@ -329,30 +367,144 @@
 
   undoBtn.addEventListener("click", function () {
     if (promoOpen) closePromotion();
+    cancelSearch();
     game.undo();
+    // pretty buggy, needs fixing asap
+    while (mode !== "two" && game.turn() !== human && game.history().length) game.undo();
     var h = game.history({ verbose: true });
     lastMove = h.length ? { from: h[h.length - 1].from, to: h[h.length - 1].to } : null;
     selected = null; targets = [];
     setNote("");
     render();
     updateStatus();
+    maybeComputerMove();
   });
 
-  newBtn.addEventListener("click", function () {
+  function newGame() {
     if (promoOpen) closePromotion();
+    cancelSearch();
     game.reset();
     lastMove = null; selected = null; targets = [];
     focusSq = "e2";
     setNote("");
     render();
     updateStatus();
-  });
+    if (engine && engineReady) engine.postMessage("ucinewgame");
+    maybeComputerMove();
+  }
+  newBtn.addEventListener("click", newGame);
 
   flipBtn.addEventListener("click", function () {
     flipped = !flipped;
     render();
   });
 
+  /* ---------- computer opponent ---------- */
+  function engineFailed() {
+    if (engine) { try { engine.terminate(); } catch (e) {} }
+    engine = null; engineReady = false; readyQueue = []; thinking = false;
+    mode = "two";
+    modeSelect.value = "two";
+    sideSelect.disabled = true;
+    setNote("The computer could not start. Host the site online or run it from a local server, then try again.", false);
+    updateStatus();
+  }
+
+  function onEngineMessage(e) {
+    var line = typeof e.data === "string" ? e.data : String(e.data);
+    if (line === "uciok") {
+      engine.postMessage("isready");
+    } else if (line === "readyok" && !engineReady) {
+      engineReady = true;
+      var q = readyQueue; readyQueue = [];
+      q.forEach(function (fn) { fn(); });
+    } else if (line.indexOf("bestmove") === 0) {
+      engine._searching = false;
+      if (ignoreBest > 0) { ignoreBest--; return; }
+      handleBestMove(line.split(" ")[1]);
+    }
+  }
+
+  function withEngine(fn) {
+    if (engine && engineReady) { fn(); return; }
+    readyQueue.push(fn);
+    if (engine) return;
+    try {
+      engine = new Worker(ENGINE_PATH);
+    } catch (err) { engineFailed(); return; }
+    engine.onmessage = onEngineMessage;
+    engine.onerror = engineFailed;
+    engine.postMessage("uci");
+  }
+
+  function cancelSearch() {
+    if (thinking && engine && engine._searching) {
+      ignoreBest++;
+      engine.postMessage("stop");
+    }
+    thinking = false;
+  }
+
+  function maybeComputerMove() {
+    if (mode === "two" || thinking || game.game_over() || game.turn() === human) return;
+    thinking = true;
+    updateStatus();
+    var cfg = LEVELS[mode];
+    var started = Date.now();
+    var fenAtStart = game.fen();
+
+    withEngine(function () {
+      if (!thinking || game.fen() !== fenAtStart) return;
+      engine.postMessage("setoption name UCI_LimitStrength value " + (cfg.elo ? "true" : "false"));
+      if (cfg.elo) engine.postMessage("setoption name UCI_Elo value " + cfg.elo);
+      engine.postMessage("position fen " + fenAtStart);
+      engine.postMessage("go movetime " + cfg.ms);
+      engine._searching = true;
+      engine._startedAt = started;
+    });
+  }
+
+  function handleBestMove(uci) {
+    var wait = Math.max(0, MIN_THINK_MS - (Date.now() - (engine._startedAt || 0)));
+    setTimeout(function () {
+      if (!thinking) return;
+      thinking = false;
+      var from = uci ? uci.slice(0, 2) : "";
+      var to = uci ? uci.slice(2, 4) : "";
+      var promo = uci && uci.length > 4 ? uci[4] : undefined;
+      var legal = game.moves({ verbose: true }).some(function (m) {
+        return m.from === from && m.to === to && (!m.promotion || m.promotion === promo);
+      });
+      if (!legal) {   // safety net: never get stuck
+        var any = game.moves({ verbose: true });
+        if (!any.length) { updateStatus(); return; }
+        from = any[0].from; to = any[0].to; promo = any[0].promotion;
+      }
+      selected = null; targets = [];
+      doMove(from, to, promo);
+    }, wait);
+  }
+
+  modeSelect.addEventListener("change", function () {
+    var wasCpu = mode !== "two";
+    mode = modeSelect.value;
+    var isCpu = mode !== "two";
+    sideSelect.disabled = !isCpu;
+    if (isCpu !== wasCpu) {
+      human = sideSelect.value;
+      flipped = isCpu && human === "b";
+      newGame();
+      if (isCpu) setNote("You are playing " + (human === "w" ? "White" : "Black") + " against the computer.", true);
+    }
+  });
+
+  sideSelect.addEventListener("change", function () {
+    human = sideSelect.value;
+    flipped = human === "b";
+    newGame();
+  });
+
+  sideSelect.disabled = true;
   render();
   updateStatus();
 })();

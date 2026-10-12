@@ -16,6 +16,7 @@
 
   <div class="progress-line" id="progressLine"></div>
 
+  <!-- NAVIGATION -->
   <nav class="navbar navbar-expand-md fixed-top" id="mainNav">
     <div class="container">
       <a class="navbar-brand" href="#home">The Sixty-Four</a>
@@ -33,6 +34,7 @@
     </div>
   </nav>
 
+  <!-- HERO -->
   <header class="hero" id="home">
     <div class="container">
       <div class="row align-items-center g-5">
@@ -53,6 +55,21 @@
           <div class="board-panel">
             <p class="board-status" id="boardStatus" aria-live="polite">White to move.</p>
             <p class="board-note" id="boardNote" aria-live="polite"></p>
+            <div class="board-opponent">
+              <label for="modeSelect" class="visually-hidden">Opponent</label>
+              <select id="modeSelect" class="form-select form-select-sm board-select">
+                <option value="two">Two players</option>
+                <option value="easy">Computer: Easy</option>
+                <option value="medium">Computer: Medium</option>
+                <option value="hard">Computer: Hard</option>
+                <option value="master">Computer: Master</option>
+              </select>
+              <label for="sideSelect" class="visually-hidden">Your side</label>
+              <select id="sideSelect" class="form-select form-select-sm board-select">
+                <option value="w">Play as White</option>
+                <option value="b">Play as Black</option>
+              </select>
+            </div>
             <div class="board-controls">
               <button type="button" class="btn btn-ctl" id="undoBtn">Undo</button>
               <button type="button" class="btn btn-ctl" id="newGameBtn">New game</button>
@@ -291,6 +308,7 @@
   <footer class="site-footer">
     <div class="container d-flex flex-wrap justify-content-between gap-2">
       <span>The Sixty-Four</span>
+      <span>Computer opponent: <a href="https://github.com/nmrugg/stockfish.js" target="_blank" rel="noopener">Stockfish</a> (GPLv3)</span>
       <span id="year"></span>
     </div>
   </footer>

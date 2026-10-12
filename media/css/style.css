@@ -130,6 +130,16 @@ p { max-width: 62ch; }
 .board-panel { max-width: 480px; margin: 1.2rem auto 0; }
 .board-status { font-family: var(--serif); font-size: 1.6rem; font-weight: 600; margin: 0 0 .1rem; color: #fff; }
 .board-note { min-height: 1.6rem; margin: 0 0 .8rem; color: var(--brass-soft); font-size: .95rem; max-width: none; }
+.board-opponent { display: flex; flex-wrap: wrap; gap: .6rem; margin-bottom: .8rem; }
+.board-select {
+  width: auto; flex: 1 1 140px; background-color: rgba(255,255,255,.06); color: #fff;
+  border: 1px solid rgba(255,255,255,.3); border-radius: var(--radius); font-family: var(--sans); padding-block: .45rem;
+  --bs-form-select-bg-img: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23D9C292' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+}
+.board-select:focus { background-color: rgba(255,255,255,.1); color: #fff; border-color: var(--brass); box-shadow: none; }
+.board-select option { background: var(--midnight); color: #fff; }
+.board-select:disabled { opacity: .45; }
+.site-footer a { color: var(--brass-soft); }
 .board-controls { display: flex; flex-wrap: wrap; gap: .6rem; margin-bottom: 1rem; }
 .btn-ctl { color: #fff; border: 1px solid rgba(255,255,255,.3); padding: .4rem 1.1rem; font-size: .92rem; }
 .btn-ctl:hover:not(:disabled) { background: rgba(255,255,255,.1); color: #fff; border-color: var(--brass); }
